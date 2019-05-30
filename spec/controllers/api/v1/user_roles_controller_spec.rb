@@ -51,9 +51,7 @@ RSpec.describe Api::V1::UserRolesController, type: :controller do
       end
 
       it "can assign many roles to user" do
-        post :create, params: { user_role: { user: user.username, role: role.title } }
-        expect(response.code).to eq "200"
-
+        UserRole.create!(user: user, role: role)
         role2 = Role.create!(title: "new_role")
 
         post :create, params: { user_role: { user: user.username, role: role2.title } }
