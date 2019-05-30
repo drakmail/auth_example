@@ -31,6 +31,7 @@ class ApplicationController < ActionController::API
   # Check JWT and set user if exists
   def authenticate
     token = request.headers["Authorization"]&.split(" ")&.last
+    # TODO: for production need to change to RSA or any another similar algo :-)
     decoded_token = JWT.decode(token, nil, false)
     @current_user = decoded_token[0]["sub"]
   rescue JWT::DecodeError
@@ -39,6 +40,7 @@ class ApplicationController < ActionController::API
 
   # Check that request has authorized user
   def authenticate!
+    # just check, that something exists in sub :-)
     raise AuthError.new if current_user.nil?
   end
 end

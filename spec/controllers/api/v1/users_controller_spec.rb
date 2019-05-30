@@ -3,25 +3,11 @@
 require "rails_helper"
 
 RSpec.describe Api::V1::UsersController, type: :controller do
-  let(:json_body) { JSON.parse(response.body) }
-
   describe "POST #create" do
-    context "without JWT" do
-      it "disallow access" do
-        post :create, format: :json
+    it_behaves_like "check_auth", :post, :create
 
-        expect(response.code).to eq "403"
-        expect(json_body["success"]).to eq false
-        expect(json_body["errors"]).to eq ["AUTH_REQUIRED"]
-      end
-    end
-
-    context "with JWT" do
-      before do
-        payload = { sub: :caller }
-        auth_token = JWT.encode(payload, nil, "none")
-        request.headers["Authorization"] = "Bearer #{auth_token}"
-      end
+    context "with auth" do
+      include_examples "auth"
 
       describe "errors" do
         it "check not empty username parameter" do

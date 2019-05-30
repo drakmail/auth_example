@@ -5,7 +5,7 @@
 # Table name: users
 #
 #  id         :bigint           not null, primary key
-#  username   :text
+#  username   :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
