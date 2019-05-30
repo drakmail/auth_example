@@ -2,13 +2,13 @@
 
 class Api::V1::UserRolesController < ApplicationController
   def create
-    UserRole.create!(user: user, role: role, kind: :default)
+    UserRole.create!(user: user, role: role)
 
     render json: { success: true, user: user.username, role: role.title }
   end
 
   def destroy
-    UserRole.find_by!(user: user, role: role, kind: :default).destroy!
+    UserRole.find_by!(user: user, role: role).destroy!
 
     render json: { success: true }
   end
@@ -20,7 +20,7 @@ class Api::V1::UserRolesController < ApplicationController
   end
 
   def role
-    @_role ||= Role.find_by!(title: user_role_params[:role])
+    @_role ||= Role.default.find_by!(title: user_role_params[:role])
   end
 
   def user_role_params

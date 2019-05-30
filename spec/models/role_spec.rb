@@ -3,9 +3,10 @@
 # Table name: roles
 #
 #  id         :bigint           not null, primary key
-#  title      :text             not null
+#  title      :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  kind       :integer          default("default"), not null
 #
 
 require 'rails_helper'

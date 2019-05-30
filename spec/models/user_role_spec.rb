@@ -5,7 +5,6 @@
 #  id         :bigint           not null, primary key
 #  user_id    :bigint           not null
 #  role_id    :bigint           not null
-#  kind       :integer          default("default"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

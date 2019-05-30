@@ -1,0 +1,69 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  Include:
+    - "**/Rakefile"
+    - "**/config.ru"
+  Exclude:
+    - "bin/*"
+    - "db/**/*"
+    - "config/**/*"
+    - "script/**/*"
+    - "frontend/**/*"
+    - "vendor/**/*"
+    - "app/views/**/*"
+    - "app/presenters/*"
+
+# Since 0.47 there are no defaults =(
+Metrics/ModuleLength:
+  Exclude:
+    - "**/*_spec.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - "**/*_spec.rb"
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Style/LambdaCall:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+  # IgnoredPatterns: ['\A\s*#']
+
+Metrics/ClassLength:
+  CountComments: false
+  Max: 300
+
+Metrics/ModuleLength:
+  CountComments: false
+  Max: 300
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 15
+
+Metrics/AbcSize:
+  Max: 30
+
+Style/RaiseArgs:
+ EnforcedStyle: compact
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact

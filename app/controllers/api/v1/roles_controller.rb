@@ -2,7 +2,7 @@
 
 class Api::V1::RolesController < ApplicationController
   def create
-    role = Role.create!(role_params)
+    role = Role.create!(role_params.merge(kind: :default))
     render json: { success: true, title: role.title }
   end
 
