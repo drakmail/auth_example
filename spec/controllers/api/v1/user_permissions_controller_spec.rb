@@ -123,6 +123,8 @@ RSpec.describe Api::V1::UserPermissionsController, type: :controller do
           ]
           permissions = permissions_list.map { |permission| Permission.create!(permission) }
           user.roles.create!(kind: :for_user, permissions: permissions)
+          # check handling of duplicate permissions for roles in different scopes
+          user.roles.create!(kind: :default, title: "special case", permissions: permissions.first(1))
 
           get :show, params: { user: user.username }, format: :json
 

@@ -79,14 +79,14 @@ RSpec.describe Api::V1::PermissionsController, type: :controller do
     end
   end
 
-  describe "GET #index" do
-    it_behaves_like "check_auth", :get, :index
+  describe "GET #show" do
+    it_behaves_like "check_auth", :get, :show
 
     context "with auth" do
       include_examples "auth"
 
       it "return empty list without permissions" do
-        get :index, format: :json
+        get :show, format: :json
 
         expect(response.code).to eq "200"
         expect(json_body["permissions"]).to eq []
@@ -99,7 +99,7 @@ RSpec.describe Api::V1::PermissionsController, type: :controller do
 
         permissions.each { |permission| Permission.create!(permission) }
 
-        get :index, format: :json
+        get :show, format: :json
 
         expect(response.code).to eq "200"
         expect(json_body["permissions"]).to eq permissions
@@ -108,14 +108,14 @@ RSpec.describe Api::V1::PermissionsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it_behaves_like "check_auth", :delete, :destroy, id: 0
+    it_behaves_like "check_auth", :delete, :destroy
 
     context "with auth" do
       include_examples "auth"
 
       context "errors" do
         it "disallow deletion of not existing permission" do
-          delete :destroy, params: { id: "unexisting_action_name" }, format: :json
+          delete :destroy, params: { permission: { action: "unexisting_action_name" } }, format: :json
 
           expect(response.code).to eq "404"
           expect(json_body["success"]).to eq false
@@ -128,7 +128,7 @@ RSpec.describe Api::V1::PermissionsController, type: :controller do
           role = Role.create!(title: "admin")
           RolePermission.create!(permission: permission, role: role)
 
-          delete :destroy, params: { id: permission_action }, format: :json
+          delete :destroy, params: { permission: { action: permission_action } }, format: :json
 
           expect(response.code).to eq "403"
           expect(json_body["success"]).to eq false
@@ -140,7 +140,7 @@ RSpec.describe Api::V1::PermissionsController, type: :controller do
         action_name = "remove me"
         Permission.create!(action: action_name)
 
-        delete :destroy, params: { id: action_name }, format: :json
+        delete :destroy, params: { permission: { action: action_name } }, format: :json
 
         expect(response.code).to eq "200"
         expect(json_body["success"]).to eq true

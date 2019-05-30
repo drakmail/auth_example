@@ -18,7 +18,8 @@ class Api::V1::UserPermissionsController < ApplicationController
       { action: action, resource: resource }.compact
     end
 
-    render json: { success: true, permissions: permissions_list }
+    # it's much simpler for now to call uniq, than implementing fragile and / or complex methods to maintain permissions uniqueness
+    render json: { success: true, permissions: permissions_list.uniq }
   end
 
   protected

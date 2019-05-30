@@ -7,7 +7,7 @@ class Api::V1::PermissionsController < ApplicationController
     render json: { success: true, action: permission.action, resource: permission.resource }
   end
 
-  def index
+  def show
     permissions = Permission.order(:id)
 
     permissions_list =  permissions.pluck(:action, :resource).map do |(action, resource)|
@@ -18,9 +18,7 @@ class Api::V1::PermissionsController < ApplicationController
   end
 
   def destroy
-    permission = Permission.find_by!(action: params[:id])
-
-    permission.destroy!
+    Permission.find_by!(permissions_params).destroy!
 
     render json: { success: true }
   end
