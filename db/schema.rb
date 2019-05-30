@@ -10,16 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_30_134953) do
+ActiveRecord::Schema.define(version: 2019_05_30_141423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "permissions", force: :cascade do |t|
-    t.text "action"
+    t.text "action", null: false
     t.text "resource"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["action", "resource"], name: "index_permissions_on_action_and_resource", unique: true, where: "(resource IS NOT NULL)"
+    t.index ["action"], name: "index_permissions_on_action", unique: true, where: "(resource IS NULL)"
   end
 
   create_table "role_permissions", force: :cascade do |t|
