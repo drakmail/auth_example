@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :roles, only: [:create]
       resources :permissions, except: [:show, :update]
       resource :role_permissions, only: [:create, :destroy]
+      resource :user_roles, only: [:create, :destroy]
     end
   end
 end
